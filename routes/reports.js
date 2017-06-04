@@ -46,6 +46,29 @@ router.get('/:id', (req, res) => {
   });
 });
 
+//EDIT REPORT ROUTE
+router.get('/:id/edit', (req, res) => {
+Report.findById(req.params.id, (err, foundReport) => {
+  if(err) {
+    res.redirect('/reports');
+  } else{
+    res.render('reports/edit', {reports: foundReport});
+    };
+  })
+});
+
+//UPDATE REPORT ROUTE
+router.put('/:id', (req, res) => {
+  Report.findByIdAndUpdate(req.params.id, req.body.report, (err, updatedReport)=> {
+    if(err) {
+      res.redirect('/reports');
+    } else {
+      res.redirect(`/reports/${req.params.id}`);
+    };
+  })
+})
+
+
 function isLoggedIn(req, res, next) {
   if(req.isAuthenticated()){
     return next();

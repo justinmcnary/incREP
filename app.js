@@ -1,13 +1,14 @@
-let express     = require('express'),
-  app           = express(),
-  bodyParser    = require('body-parser'),
-  mongoose      = require('mongoose'),
-  passport      = require('passport'),
-  LocalStrategy = require('passport-local'),
-  Report        = require('./models/report'),
-  Comment       = require('./models/comment'),
-  User          = require('./models/user'),
-  seedDB     = require('./seed')
+let express      = require('express'),
+  app            = express(),
+  bodyParser     = require('body-parser'),
+  mongoose       = require('mongoose'),
+  passport       = require('passport'),
+  LocalStrategy  = require('passport-local'),
+  methodOverride = require('method-override'),
+  Report         = require('./models/report'),
+  Comment        = require('./models/comment'),
+  User           = require('./models/user'),
+  seedDB         = require('./seed')
 
 //Requiring Routes
 let reportRoutes = require('./routes/reports'),
@@ -18,6 +19,7 @@ mongoose.connect('mongodb://localhost/inc_rep');
 app.use(bodyParser.urlencoded({extended: true}));
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/public'));
+app.use(methodOverride('_method'));
 
 // seedDB(); //seed the database
 
