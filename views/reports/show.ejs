@@ -14,8 +14,8 @@
         <img class='image-responsive' src=' <%= report.image %>' >
          <div class='caption-full'>
           <h4><a> <%= report.name %> </a></h4>
+          <p><%= `${report.height}, ${report.weight}, ${report.age}, ${report.sex}, ${report.race}`%></p>
           <p> <%= report.description %> </p>
-          <p>
             <em>Submited By: <%= report.author.username %> <em> 
           </p>
          </div>

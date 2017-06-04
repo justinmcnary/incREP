@@ -6,12 +6,19 @@ let Report = require('../models/report');
 router.post('/', isLoggedIn, (req, res) => {
   let name = req.body.name;
   let image = req.body.image;
-  let desc = req.body.description;
+  let description= req.body.description;
+  let height = req.body.height;
+  let weight = req.body.weight;
+  let age = req.body.age;
+  let sex = req.body.sex;
+  let race = req.body.race;
+
   let author = {
     id: req.user._id,
     username: req.user.username
   };
-  let newReport = {name: name, image: image, description: desc, author:author};
+
+  let newReport = {name: name, image: image, description:description, height: height, weight: weight, age: age, sex: sex, race: race, author:author};
 
   //Create new report and save to DB
   Report.create(newReport, (err, newlyCreated) => {
