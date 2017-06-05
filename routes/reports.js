@@ -1,13 +1,17 @@
 let express = require('express');
 let router = express.Router();
 let Report = require('../models/report');
+let Comment = require('../models/comment');
 let middleware = require('../middleware');
+let geocoder = require('geocoder');
+
 
 //Create New report and add it to the database
 router.post('/', middleware.isLoggedIn, (req, res) => {
   let name = req.body.name;
   let image = req.body.image;
   let description= req.body.description;
+  let severity= req.body.severity;
   let height = req.body.height;
   let weight = req.body.weight;
   let age = req.body.age;
@@ -19,15 +23,21 @@ router.post('/', middleware.isLoggedIn, (req, res) => {
     username: req.user.username
   };
 
-  let newReport = {name: name, image: image, description:description, height: height, weight: weight, age: age, sex: sex, race: race, author:author};
+//handle google maps api
+  geocoder.geocode(req.body.location, (err, data) => {
+    let lat = data.results[0].geometry.location.lat;
+    let lng = data.results[0].geometry.location.lng;
+    let location = data.results[0].formatted_address;
+    let newReport = {name: name, image: image, severity: severity, description:description, height: height, weight: weight, age: age, sex: sex, race: race, author:author, location: location, lat: lat, lng: lng};
 
-//Create new report and save to DB
-  Report.create(newReport, (err, newlyCreated) => {
-    if(err){
-      console.log(err);
-    } else{
-      res.redirect('/reports');
-    }
+    //Create new report and save to DB
+    Report.create(newReport, (err, newlyCreated) => {
+      if(err){
+        console.log(err);
+      } else{
+        res.redirect('/reports');
+      }
+    });
   });
 });
 
@@ -57,14 +67,23 @@ router.get('/:id/edit', middleware.checkReportOwnership, (req, res) => {
 
 //UPDATE REPORT ROUTE
 router.put('/:id', middleware.checkReportOwnership, (req, res) => {
-  Report.findByIdAndUpdate(req.params.id, req.body.report, (err, updatedReport)=> {
-    if(err) {
-      res.redirect('/reports');
-    } else {
-      res.redirect(`/reports/${req.params.id}`);
-    };
-  })
-})
+    geocoder.geocode(req.body.location, function (err, data) {
+      var lat = data.results[0].geometry.location.lat;
+      var lng = data.results[0].geometry.location.lng;
+      var location = data.results[0].formatted_address;
+      var newData = {name: req.body.name, image: req.body.image, description: req.body.description, severity: req.body.severity, height: req.body.height, weight: req.body.weight, age: req.body.age, sex: req.body.sex, race: req.body.race, location: location, lat: lat, lng: lng};
+
+    Report.findByIdAndUpdate(req.params.id, {$set: newData}, (err, report)=> {
+      if(err) {
+        req.flash('error', err.message);
+        res.redirect('back');
+      } else {
+        req.flash('success', 'Successfully Updated!');
+        res.redirect(`/reports/${req.params.id}`);
+      }
+    });
+  });
+});
 
 //DESTROY REPORT ROUTE
 router.delete('/:id', middleware.checkReportOwnership, (req, res) => {

@@ -1,13 +1,14 @@
 <% include ../partials/header %>
-<div class='container'>
+
   <div class='row'>
     <div class ='col-md-3'>
-      <p class='lead'>INC/REP</p>
+      <p class='lead'>INCIDENT:</p>
       <div class='list-group'>
-        <li class='list-group-item active'>Info 1</li>
-        <li class='list-group-item'>Info 2</li>
-        <li class='list-group-item'>Info 3</li>
+        <li class='list-group-item'><%= report.name %></li>
+        <li class='list-group-item'>Last Scene at: <%= report.location %></li>
+        <li class='list-group-item'><%= report.severity %></li>
       </div>
+      <div id='map'></div>
     </div>
     <div class='col-md-9'>
       <div class='thumbnail'>
@@ -52,5 +53,32 @@
       </div>
     </div>
   </div>
-</div>
+<script>
+  function initMap() {
+    var lat = <%= report.lat %>;
+    var lng = <%= report.lng %>;
+    var center = {lat: lat, lng: lng };
+    var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 8,
+        center: center,
+        scrollwheel: false
+    });
+    var contentString = `
+      <strong><%= report.name %><br />
+      <%= report.location %></strong>
+      <p><%= report.description %></p>
+    `
+    var infowindow = new google.maps.InfoWindow({
+      content: contentString
+    });
+    var marker = new google.maps.Marker({
+        position: center,
+        map: map
+    });
+    marker.addListener('click', function() {
+      infowindow.open(map, marker);
+    });
+  }
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAG7gMtsioV6WUyGo1jj_l9oPgHhifi1WA&callback=initMap"></script>
 <% include ../partials/footer %>

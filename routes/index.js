@@ -17,7 +17,7 @@ router.get('/reports', (req, res) => {
       req.flash('error', err);
       console.log(`There was an error ${err}`);
     } else{
-      res.render('reports/index', {reports:allReports, currentUser: req.user});
+      res.render('reports/index', {reports:allReports, page: 'reports', currentUser: req.user});
     }
   });
 });
@@ -25,7 +25,7 @@ router.get('/reports', (req, res) => {
 // AUTH ROUTES
 //Show form
 router.get('/register', (req, res) => {
-  res.render('register');
+  res.render('register', {page: 'register'});
 });
 
 //SIGNUP LOGIC
@@ -33,8 +33,9 @@ router.post('/register', (req, res) => {
   let newUser = new User({username: req.body.username});
   User.register(newUser, req.body.password, (err, user) => {
     if(err){
-      req.flash('error', err.message);
-      return res.redirect('/register');
+      // req
+      console.log(err);
+      return res.render('register', {error: err.message});
     }
     passport.authenticate('local')(req, res, function(){
       req.flash('success', `Welcome to Incident Report ${user.username}`);
@@ -45,7 +46,7 @@ router.post('/register', (req, res) => {
 
 //SHOW LOGIN form
 router.get('/login', (req, res) => {
-  res.render('login');
+  res.render('login', {page: 'login'});
 });
 
 //handling login logic

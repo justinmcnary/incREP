@@ -16,6 +16,9 @@ let reportRoutes = require('./routes/reports'),
     commentRoutes = require('./routes/comments'),
     indexRoutes = require('./routes/index')
 
+//Secure route for variables
+require('dotenv').config({ path: 'variables.env' });
+
 mongoose.connect('mongodb://localhost/inc_rep');
 app.use(bodyParser.urlencoded({extended: true}));
 app.set('view engine', 'ejs');
