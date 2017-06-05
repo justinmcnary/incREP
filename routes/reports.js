@@ -47,18 +47,15 @@ router.get('/:id', (req, res) => {
 });
 
 //EDIT REPORT ROUTE
-router.get('/:id/edit', (req, res) => {
-Report.findById(req.params.id, (err, foundReport) => {
-  if(err) {
-    res.redirect('/reports');
-  } else{
-    res.render('reports/edit', {reports: foundReport});
-    };
-  })
+router.get('/:id/edit', checkReportOwnership, (req, res) => {
+  Report.findById(req.params.id, (err, foundReport) => {
+    res.render('reports/edit', {report: foundReport});
+  });
 });
 
+
 //UPDATE REPORT ROUTE
-router.put('/:id', (req, res) => {
+router.put('/:id', checkReportOwnership, (req, res) => {
   Report.findByIdAndUpdate(req.params.id, req.body.report, (err, updatedReport)=> {
     if(err) {
       res.redirect('/reports');
@@ -69,7 +66,7 @@ router.put('/:id', (req, res) => {
 })
 
 //DESTROY CAMPGROUND ROUTE
-router.delete('/:id', (req, res) => {
+router.delete('/:id', checkReportOwnership, (req, res) => {
   Report.findByIdAndRemove(req.params.id, (err) => {
     if(err) {
       res.redirect('/reports');
@@ -85,5 +82,25 @@ function isLoggedIn(req, res, next) {
   }
   res.redirect('/login');
 }
+
+function checkReportOwnership(req, res, next) {
+    if(req.isAuthenticated()){
+      Report.findById(req.params.id, (err, foundReport) => {
+        if(err){
+          res.redirect('back');
+        } else {
+          //does user own report
+          if(foundReport.author.id.equals(req.user._id)){
+            next();
+          } else {
+            res.redirect('back');
+          }
+        }
+      });
+    } else {
+      res.redirect('back');
+    }
+};
+
 
 module.exports = router;

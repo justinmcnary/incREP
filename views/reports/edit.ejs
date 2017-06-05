@@ -2,33 +2,33 @@
 
 <div class='container'>
   <div class='row'>
-    <h1 style='text-align: center'>Edit <%= reports.name %> </h1>
+    <h1 style='text-align: center'>Edit <%= report.name %> </h1>
     <div style='width: 40%; margin: 35px auto;'>
-      <form action="/reports/<%=reports._id %>/?_method=PUT" method="POST">
+      <form action="/reports/<%=report._id %>/?_method=PUT" method="POST">
         <div class='form-group'>
-          <input class='form-control' type="text" name="report[name]" value="<%= reports.name %>">
+          <input class='form-control' type="text" name="report[name]" value="<%= report.name %>">
         </div>
         <div class='form-group'>
-          <input class='form-control' type="text" name="report[image]" value="<%= reports.image %>"">
+          <input class='form-control' type="text" name="report[image]" value="<%= report.image %>"">
         </div>
         <div class='form-group'>
-          <input class='form-control' type="text" name="report[height]" value="<%= reports.height %>">
+          <input class='form-control' type="text" name="report[height]" value="<%= report.height %>">
         </div>
         <div class='form-group'>
-          <input class='form-control' type="text" name="report[weight]" value="<%= reports.weight %>">
+          <input class='form-control' type="text" name="report[weight]" value="<%= report.weight %>">
         </div>
         <div class='form-group'>
-          <input class='form-control' type="text" name="report[age]" value="<%= reports.age %>">
+          <input class='form-control' type="text" name="report[age]" value="<%= report.age %>">
         </div>
         <div class='form-group'>
-          <input class='form-control' type="text" name="report[sex]" value="<%= reports.sex %>">
+          <input class='form-control' type="text" name="report[sex]" value="<%= report.sex %>">
         </div>
         <div class='form-group'>
-          <input class='form-control' type="text" name="report[race]" value="<%= reports.race %>">
+          <input class='form-control' type="text" name="report[race]" value="<%= report.race %>">
         </div>
         <hr>
          <div class='form-group'>
-         <textarea class='form-control' rows='5' name="report[description]" value="<%= reports.description %>"></textarea>
+         <textarea class='form-control' rows='5' name="report[description]" value="<%= report.description %>"></textarea>
         </div>
         
         <div class='form-group'>
