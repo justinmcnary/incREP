@@ -2,6 +2,7 @@ let express      = require('express'),
   app            = express(),
   bodyParser     = require('body-parser'),
   mongoose       = require('mongoose'),
+  flash          = require('connect-flash'),
   passport       = require('passport'),
   LocalStrategy  = require('passport-local'),
   methodOverride = require('method-override'),
@@ -20,6 +21,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/public'));
 app.use(methodOverride('_method'));
+app.use(flash()); //for flash messaging 
 
 // seedDB(); //seed the database
 
@@ -33,6 +35,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use((req, res, next) => {
   res.locals.currentUser = req.user;
+  res.locals.error = req.flash('error'); //handles flash messages for errors
+  res.locals.success = req.flash('success'); //handles flash messages for success
   next();
  });
 app.use(indexRoutes);

@@ -21,11 +21,12 @@ router.post('/', middleware.isLoggedIn, (req, res) => {
 //Lookup report by id
   Report.findById(req.params.id, (err, report) => {
     if(err) {
-      console.log(err);
+      req.flash('error', 'Something went wrong');
       res.redirect('/reports');
     } else {
       Comment.create(req.body.comment, (err, comment) => {
         if(err) {
+          req.flash('error', 'Something went wrong');
           console.log(err);
         } else {
           //add username and ID then save comment
@@ -34,6 +35,7 @@ router.post('/', middleware.isLoggedIn, (req, res) => {
           comment.save();
           report.comments.push(comment);
           report.save();
+          req.flash('success', 'Succesfully created comment');
           res.redirect(`/reports/${report._id}`);
         }
       })
@@ -69,6 +71,7 @@ router.delete('/:comment_id', middleware.checkCommentOwnership, (req, res) => {
     if(err){
       res.redirect('back');
     } else {
+      req.flash('success', 'Comment deleted');
       res.redirect(`/reports/${req.params.id}`);
     }
   })

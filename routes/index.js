@@ -14,6 +14,7 @@ router.get('/reports', (req, res) => {
   //Geat all campgrounds
   Report.find({}, (err, allReports)=> {
     if(err){
+      req.flash('error', err);
       console.log(`There was an error ${err}`);
     } else{
       res.render('reports/index', {reports:allReports, currentUser: req.user});
@@ -32,10 +33,11 @@ router.post('/register', (req, res) => {
   let newUser = new User({username: req.body.username});
   User.register(newUser, req.body.password, (err, user) => {
     if(err){
-      console.log(err);
-      return res.render('register');
+      req.flash('error', err.message);
+      return res.redirect('/register');
     }
     passport.authenticate('local')(req, res, function(){
+      req.flash('success', `Welcome to Incident Report ${user.username}`);
       res.redirect('/reports');
     });
   });
@@ -57,15 +59,8 @@ router.post('/login', passport.authenticate('local',
 //LOGOUT ROUTE
 router.get('/logout', (req, res) => {
   req.logout();
+  req.flash('success', 'You have succesfully logged out');
   res.redirect('/reports');
 });
-
-//Prevents users from commenting unless logged in
-function isLoggedIn(req, res, next){
-  if(req.isAuthenticated()){
-    return next();
-  }
-  res.redirect('/login');
-}
 
 module.exports = router;
