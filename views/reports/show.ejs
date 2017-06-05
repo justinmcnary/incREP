@@ -13,12 +13,16 @@
       <div class='thumbnail'>
         <img class='image-responsive' src=' <%= report.image %>' >
          <div class='caption-full'>
+          <h6 class='pull-right'><%= report.date %></h6>
           <h4><a> <%= report.name %> </a></h4>
           <p><%= `${report.height}, ${report.weight}, ${report.age}, ${report.sex}, ${report.race}`%></p>
           <p> <%= report.description %> </p>
             <em>Submited By: <%= report.author.username %> <em> 
           </p>
           <a class ='btn btn-warning' href='/reports/<%= report._id %>/edit'>Edit</a>
+          <form id='delete-form' action='/reports/<%= report._id%>?_method=DELETE' method='POST'>
+            <button class='btn btn-danger'>Delete</button>
+          </form>
          </div>
       </div>
       <div class='well'>

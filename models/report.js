@@ -2,6 +2,7 @@ let  mongoose = require('mongoose');
 
 //SCHEMA Setup
 let reportSchema = new mongoose.Schema({
+  date: {type: Date, default: Date.now},
   name: String,
   image: String,
   description: String,
