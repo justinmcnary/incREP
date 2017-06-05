@@ -6,7 +6,15 @@
       <div class='list-group'>
         <li class='list-group-item'><%= report.name %></li>
         <li class='list-group-item'>Last Scene at: <%= report.location %></li>
-        <li class='list-group-item'><%= report.severity %></li>
+        <li class='list-group-item'>
+          <% if(report.severity === 1){ %>
+            <p id='low-p'class="text-center">Low</p>
+          <% } else if(report.severity === 2){ %>
+            <p id='mod-p'class="text-center">Moderate</p> 
+          <% } else { %>
+            <p id='crit-p'class="text-center">Critical</p>
+          <% } %>
+        </li>
       </div>
       <div id='map'></div>
     </div>
