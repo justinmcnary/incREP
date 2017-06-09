@@ -27,7 +27,6 @@ app.use(express.static(__dirname + '/public'));
 app.use(methodOverride('_method'));
 app.use(flash()); //for flash messaging 
 
-// seedDB(); //seed the database
 
 //Passport Config
 app.use(require('express-session')({
