@@ -1,8 +1,8 @@
-let express = require('express');
-let router = express.Router();
-let passport = require('passport');
-let User = require('../models/user');
-let Report = require('../models/report');
+let express  = require('express'),
+    router   = express.Router(),
+    passport = require('passport'),
+    User     = require('../models/user'),
+    Report   = require('../models/report')
 
 //ROUTE ROUTE
 router.get('/', (req, res) => {
@@ -11,7 +11,7 @@ router.get('/', (req, res) => {
 
 //Index Route
 router.get('/reports', (req, res) => {
-  //Geat all campgrounds
+  //Get all reports
   Report.find({}, (err, allReports)=> {
     if(err){
       req.flash('error', err);
@@ -20,6 +20,11 @@ router.get('/reports', (req, res) => {
       res.render('reports/index', {reports:allReports, page: 'reports', currentUser: req.user});
     }
   });
+});
+
+//About Route
+router.get('/about', (req, res) => {
+  res.render('about');
 });
 
 // AUTH ROUTES

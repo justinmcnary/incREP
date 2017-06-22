@@ -1,9 +1,9 @@
-let express = require('express');
-let router = express.Router();
-let Report = require('../models/report');
-let Comment = require('../models/comment');
-let middleware = require('../middleware');
-let geocoder = require('geocoder');
+let express     = require('express'),
+    router      = express.Router(),
+    Report      = require('../models/report'),
+    Comment     = require('../models/comment'),
+    middleware  = require('../middleware'),
+    geocoder    = require('geocoder')
 
 
 //Create New report and add it to the database
