@@ -29,9 +29,9 @@
             <em>Submited By: <%= report.author.username %> <em> 
           </p>
           <% if(currentUser && report.author.id.equals(currentUser._id)){ %>
-            <a class ='btn btn-warning' href='/reports/<%= report._id %>/edit'>Edit</a>
+            <a class ='btn btn-default' href='/reports/<%= report._id %>/edit'>Edit</a>
             <form class='delete-form' action='/reports/<%= report._id%>?_method=DELETE' method='POST'>
-              <button class='btn btn-danger'>Delete</button>
+              <button class='btn btn-default'>Delete</button>
             </form>
           <% }%>
          </div>
@@ -50,9 +50,9 @@
                   <%= comment.text %>
                 </p>
             <% if(currentUser && comment.author.id.equals(currentUser._id)){ %>
-                <a class='btn btn-xs btn-warning' href='/reports/<%=report._id%>/comments/<%=comment._id%>/edit'>Edit</a>
+                <a class='btn btn-xs btn-default' href='/reports/<%=report._id%>/comments/<%=comment._id%>/edit'>Edit</a>
                 <form class='delete-form' action="/reports/<%=report._id%>/comments/<%=comment._id%>?_method=DELETE" method='POST'>
-                  <input type='submit' class='btn btn-xs btn-danger' value='Delete'>
+                  <input type='submit' class='btn btn-xs btn-default' value='Delete'>
                 </form>
             <% } %>
               </div>

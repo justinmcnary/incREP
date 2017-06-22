@@ -16,6 +16,9 @@ body {
 @media (max-width:620px) {
   .shrink {
     margin: 0 auto;
+  }
+  .new-row {
+    width: 100%;
   }  
 }
 
@@ -24,13 +27,19 @@ body {
   color: white; 
 }
 
+.new-row {
+  background-color: rgba(255, 255, 255, 0.8);
+  margin: 0 auto;
+  margin-bottom: 40px;
+}
+
 .thumbnail img {
   width: 100%;
 }
 
 .thumbnail {
   padding: 0;
-  background-color: #e7e7e7;
+  background-color: rgba(255, 255, 255, 0.8);
 }
 
 .thumbnail .caption-full {
