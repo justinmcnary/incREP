@@ -2,13 +2,13 @@
 
 Incident Report or INC/REP, is an express app designed to help security professionals in the hospitality industry communicate with one another. It allows users to create a private password protected account, and then post reports of suspect activity at their venue or in the area. 
 
-![Image of landing and report page](/images/incRep1.png)
+![Image of landing and report page](https://github.com/justinmcnary/incREP/blob/master/public/images/incRep1.png?raw=true)
 
 ## Using the APP
 
 After Creating an account, users can upload descriptions and photos of individuals along with a GeoTag of their last known location. Other users can then read this information as well as comment if they have something to add. 
 
-![Image of signup and show page](/images/incRep2.png)
+![Image of signup and show page](https://github.com/justinmcnary/incREP/blob/master/public/images/incRep2.png?raw=true)
 
 ### Future Functionality
 
